@@ -1,10 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gallery</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Art Gallery Slider</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Oswald:wght@500&display=swap");
+
+        body {
+            margin: 0;
+            background-color: #1a1a1a;
+            color: #FFFFFFDD;
+            position: relative;
+            overflow: hidden;
+            font-family: "Inter", sans-serif;
+        }
+
+        .card {
+            position: absolute;
+            left: 0;
+            top: 0;
+            background-position: center;
+            background-size: cover;
+            box-shadow: 6px 6px 10px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        #btn {
+        position: absolute;
+        top: 690px;
+        left: 16px;
+        z-index: 99;
+        }
+
+        .card-content {
+        position: absolute;
+        left: 0;
+        top: 0;
+        color: #FFFFFFDD;
+        padding-left: 16px;
+        }
+
+        .content-place {
+        margin-top: 6px;
+        font-size: 13px;
+        font-weight: 500;
+        }
+
+        .content-title-1,
+        .content-title-2 {
+        font-weight: 600;
+        font-size: 20px;
+        font-family: "Oswald", sans-serif;
+        }
+
+        .content-start {
+        width: 30px;
+        height: 5px;
+        border-radius: 99px;
+        background-color: #FFFFFFDD;
+        }
+
+        .details {
+        z-index: 22;
+        position: absolute;
+        top: 240px;
+        left: 60px;
+        }
+
+        .details .place-box {
+        height: 46px;
+        overflow: hidden;
+        }
+
+        .details .place-box .text {
+        padding-top: 16px;
+        font-size: 20px;
+        position: relative;
+        }
+
+        .details .place-box .text:before {
+        top: 0;
+        left: 0;
+        position: absolute;
+        content: "";
+        width: 30px;
+        height: 4px;
+        border-radius: 99px;
+        background-color: white;
+        }
+
+        .details .title-1,
+        .details .title-2 {
+        font-weight: 600;
+        font-size: 72px;
+        font-family: "Oswald", sans-serif;
+        }
+
+        .details .title-box-1,
+        .details .title-box-2 {
+        margin-top: 2px;
+        height: 100px;
+        overflow: hidden;
+        }
+
+        .details > .desc {
+        margin-top: 16px;
+        width: 350px;
+        }
+
+        .details > .cta {
+        width: 500px;
+        margin-top: 24px;
+        display: flex;
+        align-items: center;
+        }
+
+        .details > .cta > .bookmark {
+        border: none;
+        background-color: #ecad29;
+        width: 36px;
+        height: 36px;
+        border-radius: 99px;
+        color: white;
+        display: grid;
+        place-items: center;
+        }
+
+        .details > .cta > .bookmark svg {
+        width: 20px;
+        height: 20px;
+        }
+
+        .details > .cta > .discover {
+        border: 1px solid #ffffff;
+        background-color: transparent;
+        height: 36px;
+        border-radius: 99px;
+        color: #ffffff;
+        padding: 4px 24px;
+        font-size: 12px;
+        margin-left: 16px;
+        text-transform: uppercase;
+        }
+
+        nav {
+        position: fixed;
+        left: 0;
+        top: 0;
+        right: 0;
+        z-index: 50;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 20px 36px;
+        font-weight: 500;
+        }
+
+        nav svg {
+        width: 20px;
+        height: 20px;
+        }
+
+        nav .svg-container {
+        width: 20px;
+        height: 20px;
+        }
+
+        nav > div {
+        display: inline-flex;
+        align-items: center;
+        text-transform: uppercase;
+        font-size: 14px;
+        }
+
+        nav > div:first-child {
+        gap: 10px;
+        }
+
+        nav > div:last-child {
+        gap: 24px;
+        }
+
+        nav > div:last-child > .active {
+        position: relative;
+        }
+
+        nav > div:last-child > .active:after {
+        bottom: -8px;
+        left: 0;
+        right: 0;
+        position: absolute;
+        content: "";
+        height: 3px;
+        border-radius: 99px;
+        background-color: #ecad29;
+        }
+
+        .indicator {
+        position: fixed;
+        left: 0;
+        right: 0;
+        top: 0;
+        height: 5px;
+        z-index: 60;
+        background-color: #ecad29;
+        }
+
+        .pagination {
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        display: inline-flex;
+        }
+
+        .pagination > .arrow {
+        z-index: 60;
+        width: 50px;
+        height: 50px;
+        border-radius: 999px;
+        border: 2px solid #ffffff55;
+        display: grid;
+        place-items: center;
+        }
+
+        .pagination > .arrow:nth-child(2) {
+        margin-left: 20px;
+        }
+
+        .pagination > .arrow svg {
+        width: 24px;
+        height: 24px;
+        stroke-width: 2;
+        color: #ffffff99;
+        }
+
+        .pagination .progress-sub-container {
+        margin-left: 24px;
+        z-index: 60;
+        width: 500px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        }
+
+        .pagination .progress-sub-background {
+        width: 500px;
+        height: 3px;
+        background-color: #ffffff33;
+        }
+
+        .pagination .progress-sub-foreground {
+        height: 3px;
+        background-color: #ecad29;
+        }
+
+        .pagination .slide-numbers {
+        width: 50px;
+        height: 50px;
+        overflow: hidden;
+        z-index: 60;
+        position: relative;
+        }
+
+        .pagination .slide-numbers .item {
+        width: 50px;
+        height: 50px;
+        position: absolute;
+        color: white;
+        top: 0;
+        left: 0;
+        display: grid;
+        place-items: center;
+        font-size: 32px;
+        font-weight: bold;
+        }
+
+        .cover {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: #fff;
+        z-index: 100;
+        }
+    </style>
 </head>
 <body>
     <div class="indicator"></div>
@@ -18,130 +298,108 @@
       <div class="title-box-1"><div class="title-1">Mona</div></div>
       <div class="title-box-2"><div class="title-2">Lisa</div></div>
       <div class="desc">
-        Tucked away in the Switzerland Alps, Saint Antönien offers an idyllic retreat for those seeking tranquility and adventure alike.      </div>
+        Exploring the world's most iconic artworks through a dynamic gallery experience.
+      </div>
     </div>
 
     <div class="details" id="details-odd">
       <div class="place-box">
         <div class="text">Paris</div>
       </div>
-      <div class="title-box-1"><div class="title-1">Mona </div></div>
+      <div class="title-box-1"><div class="title-1">Mona</div></div>
       <div class="title-box-2"><div class="title-2">Lisa</div></div>
       <div class="desc">
-        Tucked away in the Switzerland Alps, Saint Antönien offers an idyllic retreat for those seeking tranquility and adventure alike.      </div>
+        Exploring the world's most iconic artworks through a dynamic gallery experience.
       </div>
     </div>
 
     <div class="pagination" id="pagination">
       <div class="arrow arrow-left">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M15.75 19.5L8.25 12l7.5-7.5"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
         </svg>
       </div>
       <div class="arrow arrow-right">
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 24 24"
-          stroke="currentColor"
-        >
-          <path
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            d="M8.25 4.5l7.5 7.5-7.5 7.5"
-          />
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
         </svg>
       </div>
-      <div class="progress-sub-container" >
-        <div class="progress-sub-background" >
-            <div class="progress-sub-foreground" ></div>
+      <div class="progress-sub-container">
+        <div class="progress-sub-background">
+            <div class="progress-sub-foreground"></div>
         </div>
     </div>
     <div class="slide-numbers" id="slide-numbers"></div>
     </div>
 
-    <div class="cover" ></div>
-   
+    <div class="cover"></div>
 
-   
-  </body>
- 
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script>
+    // Direct Base64 encoded images to eliminate external loading issues
     const data = [
-    {
-        place:'Paris',
-        title:'MONA',
-        title2:'LISA',
-        description:'Tucked away in the Switzerland Alps, Saint Antönien offers an idyllic retreat for those seeking tranquility and adventure alike. ',
-        image:'monalisa.png'
-    },
-    {
-        place:'France',
-        title:'THE WEDDING',
-        title2:'AT CANA',
-        description:'Tucked away in the Switzerland Alps, Saint Antönien offers an idyllic retreat for those seeking tranquility and adventure alike. ',
-        image:'THE_WEDDING.PNG'
-    },
-    {
-        place:'New York -USA',
-        title:'Washington Crossing',
-        title2:'the Delaware',
-        description:'Tucked away in the Switzerland Alps, Saint Antönien offers an idyllic retreat for those seeking tranquility and adventure alike. ',
-        image:'welamarenew.png'
-    },
-    {
-        place:'Italy',
-        title:'The Birth',
-        title2:'of Venus',
-        description:'Tucked away in the Switzerland Alps, Saint Antönien offers an idyllic retreat for those seeking tranquility and adventure alike. ',
-        image:'florence.png'
-    },
-    {
-        place:'Netherlands',
-        title:'The',
-        title2:'Bedroom',
-        description:'Tucked away in the Switzerland Alps, Saint Antönien offers an idyllic retreat for those seeking tranquility and adventure alike. ',
-        image:'bedroom.png'
-    },
-    {
-        place:'Amsterdam',
-        title:'The',
-        title2:'Night Watch',
-        description:'Tucked away in the Switzerland Alps, Saint Antönien offers an idyllic retreat for those seeking tranquility and adventure alike. ',
-        image:'night.png'
-    },
-]
+        {
+            place:'Paris',
+            title:'MONA',
+            title2:'LISA',
+            description:'The iconic painting by Leonardo da Vinci, capturing an enigmatic smile that has fascinated the world for centuries.',
+            image:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABkADADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJpAA//Z'
+        },
+        {
+            place:'France',
+            title:'THE WEDDING',
+            title2:'AT CANA',
+            description:'A masterpiece depicting the biblical wedding scene, showcasing intricate details and vibrant colors.',
+            image:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABkADADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJpAA//Z'
+        },
+        {
+            place:'New York -USA',
+            title:'Washington Crossing',
+            title2:'the Delaware',
+            description:'A historic painting capturing General Washington leading troops across the Delaware River during the American Revolution.',
+            image:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABkADADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJpAA//Z'
+        },
+        {
+            place:'Italy',
+            title:'The Birth',
+            title2:'of Venus',
+            description:'Sandro Botticelli\'s masterpiece depicting the goddess Venus emerging from the sea, symbolizing beauty and grace.',
+            image:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABkADADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJpAA//Z'
+        },
+        {
+            place:'Netherlands',
+            title:'The',
+            title2:'Bedroom',
+            description:'Vincent van Gogh\'s intimate portrayal of his bedroom in Arles, showcasing his unique artistic style and emotional depth.',
+            image:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABkADADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJpAA//Z'
+        },
+        {
+            place:'Amsterdam',
+            title:'The',
+            title2:'Night Watch',
+            description:'Rembrandt\'s most famous painting, a dynamic group portrait that revolutionized the genre of portrait painting.',
+            image:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAMCAgMCAgMDAwMEAwMEBQgFBQQEBQoHBwYIDAoMDAsKCwsNDhIQDQ4RDgsLEBYQERMUFRUVDA8XGBYUGBIUFRT/2wBDAQMEBAUEBQkFBQkUDQsNFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBQUFBT/wAARCABkADADASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAn/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEBAAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AJpAA//Z'
+        }
+    ];
 
-const _ = (id)=>document.getElementById(id)
-const cards = data.map((i, index)=>`<div class="card" id="card${index}" style="background-image:url(${i.image})"  ></div>`).join('')
+    const _ = (id) => document.getElementById(id);
+    const cards = data.map((i, index) => `<div class="card" id="card${index}" style="background-image:url(${i.image})"></div>`).join('');
 
+    const cardContents = data.map((i, index) => `
+        <div class="card-content" id="card-content-${index}">
+            <div class="content-start"></div>
+            <div class="content-place">${i.place}</div>
+            <div class="content-title-1">${i.title}</div>
+            <div class="content-title-2">${i.title2}</div>
+        </div>
+    `).join('');
 
+    const slideNumbers = data.map((_, index) => `<div class="item" id="slide-item-${index}">${index+1}</div>`).join('');
 
-const cardContents = data.map((i, index)=>`<div class="card-content" id="card-content-${index}">
-<div class="content-start"></div>
-<div class="content-place">${i.place}</div>
-<div class="content-title-1">${i.title}</div>
-<div class="content-title-2">${i.title2}</div>
+    _('demo').innerHTML = cards + cardContents;
+    _('slide-numbers').innerHTML = slideNumbers;
 
-</div>`).join('')
-
-
-const sildeNumbers = data.map((_, index)=>`<div class="item" id="slide-item-${index}" >${index+1}</div>`).join('')
-_('demo').innerHTML =  cards + cardContents
-_('slide-numbers').innerHTML =  sildeNumbers
-
-
-const range = (n) =>
+    const range = (n) =>
   Array(n)
     .fill(0)
     .map((i, j) => i + j);
@@ -439,5 +697,6 @@ async function start() {
 }
 
 start()
-  </script>
+    </script>
+</body>
 </html>
