@@ -2,12 +2,16 @@ import React from 'react'
 import HeroSection from '../components/HeroSection'
 import AboutSection from '../components/AboutSection'
 import Footer from '../components/Footer';
+import EducationalResources from '../components/EducationalResources';
+import MuseumCarousel from '../components/MuseumCarousel';
 
 const HomePage = () => {
   return (
-    <div className='h-screen w-full flex justify-center items-center flex-nowrap flex-col'>
+    <div >
       <HeroSection />
       <AboutSection />
+      <EducationalResources />
+      <MuseumCarousel />
       <Footer />
     </div>
   )
