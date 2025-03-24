@@ -1,9 +1,12 @@
-import React from 'react'
+import React from 'react';
+
+
+import MuseumLandingPage2 from './Pages/MuseumLandingPage2';
 
 const App = () => {
   return (
     <div>
-      <h1 className='h-36 w-full bg-black text-white'>Hellow World</h1>
+      <MuseumLandingPage2/>
     </div>
   )
 }
