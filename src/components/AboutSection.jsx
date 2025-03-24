@@ -1,16 +1,11 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
-  Globe, 
-  Star, 
-  BookOpen, 
-  Target, 
-  Zap, 
-  Linkedin,
+  Linkedin, 
   Twitter
 } from 'lucide-react';
 
-const TeamMember = ({ name, role, description, expertise, achievements }) => {
+const TeamMember = ({ name, role, description, expertise, achievements, imageUrl }) => {
   const [isExpanded, setIsExpanded] = useState(false);
 
   return (
@@ -24,7 +19,7 @@ const TeamMember = ({ name, role, description, expertise, achievements }) => {
       {/* Image and Basic Info */}
       <div className="relative h-80">
         <img 
-          src={`/api/placeholder/800/600?text=${name.replace(' ', '+')}`} 
+          src={imageUrl} 
           alt={name} 
           className="absolute inset-0 w-full h-full object-cover"
         />
@@ -120,7 +115,8 @@ const AboutSection = () => {
         "Published groundbreaking research on digital art preservation",
         "Curated over 50 international digital exhibitions",
         "Developed ArtVistas' unique immersive art experience platform"
-      ]
+      ],
+      imageUrl: "https://imgs.search.brave.com/WJrs_-eS-4qOSxwZoqWQD3GCfN9hSa9SenYAlVs_hjc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9jaGVlcmZ1bC1z/ZW5pb3Itd29tYW4t/c3R1ZGlvLXNob290/XzUzODc2LTEzNDc1/My5qcGc_c2VtdD1h/aXNfaHlicmlk"
     },
     {
       name: "Marcus Chen",
@@ -137,7 +133,8 @@ const AboutSection = () => {
         "Created award-winning interactive art platforms",
         "Keynote speaker on art and technology integration",
         "Developed ArtVistas' revolutionary virtual exhibition technology"
-      ]
+      ],
+      imageUrl: "https://imgs.search.brave.com/VqyMYw0NyHqRjpOTgKVXzcBqKCj6tldOAXmWN1DQLtM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWdj/ZG4uc3RhYmxlZGlm/ZnVzaW9ud2ViLmNv/bS8yMDI0LzExLzQv/YWM1MzhhM2UtNTdk/Ny00NjUwLTk4ZTAt/ZjYzYzc4M2UzNjQ0/LmpwZw"
     },
     {
       name: "Sophia Nkosi",
@@ -154,7 +151,8 @@ const AboutSection = () => {
         "Developed ArtVistas' global artist support program",
         "Recognized for promoting diversity in digital art spaces",
         "Created innovative cross-cultural art exchange initiatives"
-      ]
+      ],
+      imageUrl: "https://imgs.search.brave.com/nEYkRE6YbI65c_ilbVby-kKWA4bbm_N2H6hQk7cCttA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9z/bWlsZXktZWxkZXIt/d29tYW4tc3RhbmRp/bmcta2l0Y2hlbl8y/My0yMTQ4MzczODg0/LmpwZz9zZW10PWFp/c19oeWJyaWQ"
     }
   ];
 
@@ -185,6 +183,7 @@ const AboutSection = () => {
                 description={member.description}
                 expertise={member.expertise}
                 achievements={member.achievements}
+                imageUrl={member.imageUrl}
               />
             ))}
           </div>

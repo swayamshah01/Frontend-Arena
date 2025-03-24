@@ -12,81 +12,61 @@ import {
 } from 'lucide-react';
 
 const WorkshopCard = ({ title, instructor, duration, level, description, price, type }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
-  return (
-    <motion.div 
-      className="bg-[#FFFFFF11] rounded-2xl overflow-hidden border border-[#FFFFFF22] hover:border-[#D4AF37] transition-all duration-300"
-      whileHover={{ scale: 1.05 }}
-      initial={{ opacity: 0, y: 50 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.6 }}
-    >
-      <div className="p-6">
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center space-x-4">
-            {type === 'workshop' ? <Book className="text-[#D4AF37]" size={32} /> : 
-             type === 'webinar' ? <Video className="text-[#D4AF37]" size={32} /> : 
-             <GraduationCap className="text-[#D4AF37]" size={32} />}
-            <div>
-              <h3 className="text-2xl font-bold text-white">{title}</h3>
-              <p className="text-[#FFFFFF99]">{instructor}</p>
+    return (
+      <motion.div 
+        className="bg-[#FFFFFF11] rounded-2xl overflow-hidden border border-[#FFFFFF22] hover:border-[#D4AF37] transition-all duration-300"
+        whileHover={{ scale: 1.05 }}
+        initial={{ opacity: 0, y: 50 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+      >
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center space-x-4">
+              {type === 'workshop' ? <Book className="text-[#D4AF37]" size={32} /> : 
+               type === 'webinar' ? <Video className="text-[#D4AF37]" size={32} /> : 
+               <GraduationCap className="text-[#D4AF37]" size={32} />}
+              <div>
+                <h3 className="text-2xl font-bold text-white">{title}</h3>
+                <p className="text-[#FFFFFF99]">{instructor}</p>
+              </div>
+            </div>
+            <div className="flex items-center space-x-2">
+              <Clock className="text-[#FFFFFF99]" size={20} />
+              <span className="text-[#FFFFFF99]">{duration}</span>
             </div>
           </div>
-          <div className="flex items-center space-x-2">
-            <Clock className="text-[#FFFFFF99]" size={20} />
-            <span className="text-[#FFFFFF99]">{duration}</span>
+  
+          <div className="flex justify-between items-center mb-4">
+            <span className="bg-[#FFFFFF22] px-3 py-1 rounded-full text-sm">
+              {level} Level
+            </span>
+            <span className="text-[#D4AF37] font-semibold">{price === 0 ? 'Free' : `$${price}`}</span>
+          </div>
+  
+          <p className="text-[#FFFFFF99] leading-relaxed mb-6">{description}</p>
+  
+          <div className="flex space-x-3">
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              className="bg-[#D4AF37] text-black px-4 py-2 rounded-full flex items-center space-x-2 w-full justify-center"
+            >
+              <Play size={20} />
+              <span>Start Course</span>
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              className="border border-[#FFFFFF55] text-[#FFFFFF99] px-4 py-2 rounded-full flex items-center space-x-2 w-full justify-center"
+            >
+              <Download size={20} />
+              <span>Download Syllabus</span>
+            </motion.button>
           </div>
         </div>
-
-        <div className="flex justify-between items-center mb-4">
-          <span className="bg-[#FFFFFF22] px-3 py-1 rounded-full text-sm">
-            {level} Level
-          </span>
-          <span className="text-[#D4AF37] font-semibold">{price === 0 ? 'Free' : `$${price}`}</span>
-        </div>
-
-        <AnimatePresence>
-          {isExpanded && (
-            <motion.div
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="mb-4"
-            >
-              <p className="text-[#FFFFFF99] leading-relaxed mb-4">{description}</p>
-              <div className="flex space-x-3">
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  className="bg-[#D4AF37] text-black px-4 py-2 rounded-full flex items-center space-x-2"
-                >
-                  <Play size={20} />
-                  <span>Start Course</span>
-                </motion.button>
-                <motion.button
-                  whileHover={{ scale: 1.1 }}
-                  className="border border-[#FFFFFF55] text-[#FFFFFF99] px-4 py-2 rounded-full flex items-center space-x-2"
-                >
-                  <Download size={20} />
-                  <span>Download Syllabus</span>
-                </motion.button>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
-
-        <motion.button
-          onClick={() => setIsExpanded(!isExpanded)}
-          whileHover={{ scale: 1.05 }}
-          className="w-full bg-[#FFFFFF22] text-[#FFFFFF99] py-2 rounded-full mt-4 hover:bg-[#D4AF37] hover:text-black transition-colors"
-        >
-          {isExpanded ? 'Collapse Details' : 'Explore Course'}
-        </motion.button>
-      </div>
-    </motion.div>
-  );
-};
-
+      </motion.div>
+    );
+  };
+  
 const EducationalResources = () => {
   const workshops = [
     {
