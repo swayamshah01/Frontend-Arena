@@ -60,14 +60,11 @@ const HeroSection = () => {
     >
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <iframe
-          src="https://www.youtube.com/embed/WBwNw4WjV7g?si=opmlvRJ4poDo7OiO&autoplay=1&mute=1&loop=1&controls=0&playlist=WBwNw4WjV7g"
-          title="Background Atmosphere"
-          className="w-full h-full object-cover"
-          frameBorder="0"
-          allow="autoplay; encrypted-media"
-          allowFullScreen
-        ></iframe>
+        <video className="top-0 left-0 w-full h-full object-cover" autoPlay loop muted >
+          <source
+          src="src\assets\video.mp4"
+          type="video/mp4" />
+        </video>
         {/* Dark Overlay */}
         <div 
           className="absolute inset-0"
@@ -106,7 +103,7 @@ const HeroSection = () => {
             textShadow: `0 0 20px ${colors.gold}40`
           }}
         >
-          CREATIVE
+          ArtVistas
         </motion.h1>
 
         {/* Subtitle */}
