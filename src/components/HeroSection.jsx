@@ -144,6 +144,7 @@ const HeroSection = () => {
               color: colors.text,
               border: `2px solid ${colors.borderMedium}`
             }}
+            onClick={()=>{navigate("/gallery")}}
           >
             Gallery
           </motion.button>
