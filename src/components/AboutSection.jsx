@@ -5,9 +5,16 @@ import {
   Twitter
 } from 'lucide-react';
 
-const TeamMember = ({ name, role, description, expertise, achievements, imageUrl }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-
+const TeamMember = ({ 
+  name, 
+  role, 
+  description, 
+  expertise, 
+  achievements, 
+  imageUrl, 
+  isExpanded, 
+  onToggleExpand 
+}) => {
   return (
     <motion.div 
       className="bg-[#FFFFFF11] rounded-2xl overflow-hidden shadow-2xl border border-[#FFFFFF22] hover:border-[#D4AF37] transition-all duration-300 transform hover:scale-105"
@@ -50,7 +57,7 @@ const TeamMember = ({ name, role, description, expertise, achievements, imageUrl
             </motion.a>
           </div>
           <motion.button
-            onClick={() => setIsExpanded(!isExpanded)}
+            onClick={onToggleExpand}
             whileHover={{ scale: 1.1 }}
             className="bg-[#D4AF37] text-black px-4 py-2 rounded-full font-semibold"
           >
@@ -99,62 +106,62 @@ const TeamMember = ({ name, role, description, expertise, achievements, imageUrl
 };
 
 const AboutSection = () => {
+  const [expandedMemberIndex, setExpandedMemberIndex] = useState(null);
+
   const teamMembers = [
     {
       name: "Elena Rodriguez",
       role: "Chief Curator",
-      description: "A visionary art historian with an extensive background in digital museum curation, Elena has transformed the way we experience art in the digital age. Her innovative approach bridges traditional art scholarship with cutting-edge technological storytelling.",
+      description: "A visionary art historian transforming digital museum curation through innovative technological storytelling.",
       expertise: [
         "Digital Curation",
         "Contemporary Art",
-        "Cultural Preservation",
         "Museum Technology"
       ],
       achievements: [
-        "Awarded 'Digital Museum Innovator of the Year' by Global Art Institute",
-        "Published groundbreaking research on digital art preservation",
-        "Curated over 50 international digital exhibitions",
-        "Developed ArtVistas' unique immersive art experience platform"
+        "Digital Museum Innovator of the Year",
+        "Curated 50+ international digital exhibitions",
+        "Developed immersive art experience platform"
       ],
       imageUrl: "https://imgs.search.brave.com/WJrs_-eS-4qOSxwZoqWQD3GCfN9hSa9SenYAlVs_hjc/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9jaGVlcmZ1bC1z/ZW5pb3Itd29tYW4t/c3R1ZGlvLXNob290/XzUzODc2LTEzNDc1/My5qcGc_c2VtdD1h/aXNfaHlicmlk"
     },
     {
       name: "Marcus Chen",
       role: "Creative Director",
-      description: "A pioneering digital experience designer who reimagines the intersection of technology and art. Marcus brings a unique blend of creative vision and technological expertise to transform how we interact with and understand art in the digital realm.",
+      description: "A pioneering digital experience designer reimagining the intersection of technology and art.",
       expertise: [
         "UX Design",
         "Digital Art",
-        "Interactive Experiences",
-        "Creative Technology"
+        "Interactive Experiences"
       ],
       achievements: [
-        "Led design innovation at top tech and art institutions",
-        "Created award-winning interactive art platforms",
-        "Keynote speaker on art and technology integration",
-        "Developed ArtVistas' revolutionary virtual exhibition technology"
+        "Led design innovation at tech institutions",
+        "Created award-winning art platforms",
+        "Developed revolutionary exhibition technology"
       ],
       imageUrl: "https://imgs.search.brave.com/VqyMYw0NyHqRjpOTgKVXzcBqKCj6tldOAXmWN1DQLtM/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWdj/ZG4uc3RhYmxlZGlm/ZnVzaW9ud2ViLmNv/bS8yMDI0LzExLzQv/YWM1MzhhM2UtNTdk/Ny00NjUwLTk4ZTAt/ZjYzYzc4M2UzNjQ0/LmpwZw"
     },
     {
       name: "Sophia Nkosi",
       role: "Global Outreach Coordinator",
-      description: "A passionate advocate for global art accessibility, Sophia connects ArtVistas with artists and communities worldwide. Her multicultural background and extensive network have been instrumental in creating a truly global, inclusive art platform.",
+      description: "A passionate advocate for global art accessibility, connecting artists and communities worldwide.",
       expertise: [
         "Cultural Diplomacy",
         "Global Art Networks",
-        "Community Engagement",
-        "Multicultural Curation"
+        "Community Engagement"
       ],
       achievements: [
-        "Established partnerships with art communities in 50+ countries",
-        "Developed ArtVistas' global artist support program",
-        "Recognized for promoting diversity in digital art spaces",
-        "Created innovative cross-cultural art exchange initiatives"
+        "Partnerships in 50+ countries",
+        "Developed global artist support program",
+        "Promoted diversity in digital art spaces"
       ],
       imageUrl: "https://imgs.search.brave.com/nEYkRE6YbI65c_ilbVby-kKWA4bbm_N2H6hQk7cCttA/rs:fit:500:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/ZnJlZS1waG90by9z/bWlsZXktZWxkZXIt/d29tYW4tc3RhbmRp/bmcta2l0Y2hlbl8y/My0yMTQ4MzczODg0/LmpwZz9zZW10PWFp/c19oeWJyaWQ"
     }
   ];
+
+  const handleToggleExpand = (index) => {
+    setExpandedMemberIndex(expandedMemberIndex === index ? null : index);
+  };
 
   return (
     <motion.section 
@@ -178,12 +185,9 @@ const AboutSection = () => {
             {teamMembers.map((member, index) => (
               <TeamMember 
                 key={index}
-                name={member.name}
-                role={member.role}
-                description={member.description}
-                expertise={member.expertise}
-                achievements={member.achievements}
-                imageUrl={member.imageUrl}
+                {...member}
+                isExpanded={expandedMemberIndex === index}
+                onToggleExpand={() => handleToggleExpand(index)}
               />
             ))}
           </div>
