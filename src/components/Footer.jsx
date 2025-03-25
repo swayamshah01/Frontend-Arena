@@ -131,7 +131,7 @@ const Footer = () => {
                 <Calendar size={20} className="text-[#D4AF37] mr-2" />
                 <h3 className="text-white font-semibold text-xl">Newsletter</h3>
               </div>
-              <div className="bg-[#FFFFFF11] rounded-xl p-4 border w-160 border-[#FFFFFF22]">
+              <div className="bg-[#FFFFFF11] rounded-xl p-4 border w-160 border-[#FFFFFF22] max-w-full">
                 <form className="space-y-3">
                   <input 
                     type="email" 

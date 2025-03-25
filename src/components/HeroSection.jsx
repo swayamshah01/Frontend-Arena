@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     // Add Google Fonts
@@ -123,26 +125,27 @@ const HeroSection = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 rounded-full font-semibold shadow-lg transition-all"
+            className="px-4 py-2 md:px-8 md:py-3 rounded-full font-semibold shadow-lg transition-all hover:cursor-pointer"
             style={{
               backgroundColor: colors.gold,
               color: colors.background,
               border: `2px solid ${colors.borderLight}`
             }}
+            onClick={()=>{navigate("/virtual-museum")}}
           >
-            Explore
+            Virtual World
           </motion.button>
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-8 py-3 rounded-full font-semibold transition-all"
+            className="px-4 py-2 md:px-8 md:py-3 rounded-full font-semibold transition-all hover:cursor-pointer"
             style={{
               backgroundColor: 'transparent',
               color: colors.text,
               border: `2px solid ${colors.borderMedium}`
             }}
           >
-            Learn More
+            Gallery
           </motion.button>
         </motion.div>
 

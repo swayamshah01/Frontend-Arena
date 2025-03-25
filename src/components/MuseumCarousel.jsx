@@ -110,7 +110,7 @@ export const MuseumCarousel = () => {
                     boxShadow: '0 10px 25px rgba(0,0,0,0.2)'
                   }}
                 >
-                  <p className="text-5xl font-bold opacity-100 text-white">
+                  <p className="text-2xl md:text-5xl font-bold opacity-100 text-white">
                     {museumFacts[idx]}
                   </p>
                 </div>
