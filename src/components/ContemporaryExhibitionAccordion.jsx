@@ -6,6 +6,8 @@ import {
   FiPaperclip 
 } from "react-icons/fi";
 import { AnimatePresence, motion } from "framer-motion";
+import i1 from "../assets/img1.webp"
+import i2 from "../assets/img2.webp"
 
 // Custom hook for window size
 export const useWindowSize = () => {
@@ -172,7 +174,7 @@ const exhibitionItems = [
     id: 1,
     title: "Digital Innovations",
     Icon: FiGlobe,
-    imgSrc: "/api/placeholder/1200/800",
+    imgSrc: i1,
     description: "Exploring the cutting-edge intersection of technology and artistic expression in contemporary digital art.",
     details: [
       "Showcasing groundbreaking digital art techniques",
@@ -185,7 +187,7 @@ const exhibitionItems = [
     id: 2,
     title: "Algorithmic Creativity",
     Icon: FiTrello,
-    imgSrc: "/api/placeholder/1200/800",
+    imgSrc: i2,
     description: "Diving into the world of computational creativity and how algorithms are revolutionizing artistic creation.",
     details: [
       "Machine learning-generated artworks",
