@@ -5,19 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "npm run optimize-video && vite build",
-    "build:vite": "vite build",
-    "build:only": "vite build",
-    "optimize-video": "node optimize-video.mjs",
+    "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview",
-    "video:optimize": "node optimize-video.mjs",
-    "video:info": "node -e \"console.log('Video optimization ready!');\"",
-    "video:check": "node -e \"console.log('FFmpeg:', require('@ffmpeg-installer/ffmpeg').path); console.log('FFprobe:', require('@ffprobe-installer/ffprobe').path);\"",
-    "video:clean": "rm -f public/video.mp4"
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@ffmpeg-installer/ffmpeg": "^1.1.0",
     "@ffprobe-installer/ffprobe": "^2.1.2",
     "@radix-ui/react-dialog": "^1.1.6",
     "@radix-ui/react-tooltip": "^1.1.8",
@@ -27,8 +19,6 @@
     "@tailwindcss/vite": "^4.0.15",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "ffmpeg-static": "^5.2.0",
-    "fluent-ffmpeg": "^2.1.3",
     "framer-motion": "^12.5.0",
     "gsap": "^3.12.7",
     "install": "^0.13.0",
