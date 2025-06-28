@@ -1,9 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [videoError, setVideoError] = useState(false);
+  const [videoLoading, setVideoLoading] = useState(true);
+  const videoRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,6 +55,31 @@ const HeroSection = () => {
     }
   };
 
+  const handleVideoError = (e) => {
+    console.error('Video failed to load:', e);
+    setVideoError(true);
+    setVideoLoading(false);
+  };
+
+  const handleVideoLoad = () => {
+    console.log('Video loaded successfully');
+    setVideoError(false);
+    setVideoLoading(false);
+  };
+
+  const handleVideoLoadStart = () => {
+    console.log('Video loading started');
+    setVideoLoading(true);
+  };
+
+  const handleVideoCanPlay = () => {
+    console.log('Video can start playing');
+    setVideoLoading(false);
+    if (videoRef.current) {
+      videoRef.current.play().catch(console.error);
+    }
+  };
+
   return (
     <div 
       className="relative h-screen w-full overflow-hidden"
@@ -62,11 +90,45 @@ const HeroSection = () => {
     >
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <video className="top-0 left-0 w-full h-full object-cover" autoPlay loop muted >
-          <source
-          src="src\assets\video.mp4"
-          type="video/mp4" />
-        </video>
+        {/* Loading indicator */}
+        {videoLoading && !videoError && (
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-white"></div>
+          </div>
+        )}
+        
+        {!videoError ? (
+          <video 
+            ref={videoRef}
+            className="top-0 left-0 w-full h-full object-cover" 
+            autoPlay 
+            loop 
+            muted 
+            playsInline
+            preload="auto"
+            onError={handleVideoError}
+            onLoadedData={handleVideoLoad}
+            onLoadStart={handleVideoLoadStart}
+            onCanPlay={handleVideoCanPlay}
+            style={{ 
+              opacity: videoLoading ? 0 : 1,
+              transition: 'opacity 0.5s ease-in-out'
+            }}
+          >
+            <source src="/video.mp4" type="video/mp4" />
+            {/* Fallback message */}
+            Your browser does not support the video tag.
+          </video>
+        ) : (
+          // Fallback gradient background if video fails
+          <div 
+            className="w-full h-full"
+            style={{
+              background: `linear-gradient(135deg, ${colors.background} 0%, #1a1a1a 50%, ${colors.background} 100%)`,
+            }}
+          />
+        )}
+        
         {/* Dark Overlay */}
         <div 
           className="absolute inset-0"
@@ -131,7 +193,7 @@ const HeroSection = () => {
               color: colors.background,
               border: `2px solid ${colors.borderLight}`
             }}
-            onClick={()=>{navigate("/virtual-museum")}}
+            onClick={() => navigate("/virtual-museum")}
           >
             Virtual World
           </motion.button>
@@ -144,7 +206,7 @@ const HeroSection = () => {
               color: colors.text,
               border: `2px solid ${colors.borderMedium}`
             }}
-            onClick={()=>{navigate("/gallery")}}
+            onClick={() => navigate("/gallery")}
           >
             Gallery
           </motion.button>
@@ -177,6 +239,13 @@ const HeroSection = () => {
             ></div>
           </div>
         </motion.div>
+
+        {/* Debug info (remove in production) */}
+        {process.env.NODE_ENV === 'development' && (
+          <div className="absolute top-4 right-4 text-sm text-white bg-black bg-opacity-50 p-2 rounded">
+            Video Status: {videoError ? 'Error' : videoLoading ? 'Loading' : 'Ready'}
+          </div>
+        )}
       </motion.div>
     </div>
   );
