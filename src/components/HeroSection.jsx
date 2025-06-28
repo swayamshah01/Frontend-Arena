@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
+// Import the video file from assets
+import heroVideo from '../assets/video.mp4';
 
 const HeroSection = () => {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [videoStatus, setVideoStatus] = useState('loading');
+  const videoRef = useRef(null);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -52,6 +56,22 @@ const HeroSection = () => {
     }
   };
 
+  // Video handlers
+  const handleVideoLoad = () => {
+    console.log('✅ Video loaded successfully');
+    setVideoStatus('loaded');
+  };
+
+  const handleVideoError = (e) => {
+    console.error('❌ Video error:', e.target.error);
+    setVideoStatus('error');
+  };
+
+  const handleVideoPlay = () => {
+    console.log('▶️ Video started playing');
+    setVideoStatus('playing');
+  };
+
   return (
     <div 
       className="relative h-screen w-full overflow-hidden"
@@ -62,19 +82,51 @@ const HeroSection = () => {
     >
       {/* Background Video */}
       <div className="absolute inset-0 z-0">
-        <video className="top-0 left-0 w-full h-full object-cover" autoPlay loop muted >
-          <source
-            src="/video.mp4"
-            type="video/mp4" />
+        <video 
+          ref={videoRef}
+          className="absolute top-0 left-0 w-full h-full object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          onLoadedData={handleVideoLoad}
+          onError={handleVideoError}
+          onPlay={handleVideoPlay}
+        >
+          <source src={heroVideo} type="video/mp4" />
+          Your browser does not support the video tag.
         </video>
+
+        {/* Show status overlay */}
+        {videoStatus === 'loading' && (
+          <div className="absolute inset-0 flex items-center justify-center bg-gray-800">
+            <div className="text-white text-center">
+              <div 
+                className="animate-spin rounded-full h-16 w-16 border-b-2 mx-auto mb-4"
+                style={{ borderColor: colors.gold }}
+              ></div>
+              <p>Loading video...</p>
+            </div>
+          </div>
+        )}
+
+        {videoStatus === 'error' && (
+          <div className="absolute inset-0 flex items-center justify-center bg-red-900">
+            <div className="text-white text-center">
+              <p className="text-xl mb-2">❌ Video Failed to Load</p>
+              <p className="text-sm">Check console for details</p>
+            </div>
+          </div>
+        )}
+
         {/* Dark Overlay */}
         <div 
           className="absolute inset-0"
           style={{ 
             backgroundColor: colors.background, 
-            opacity: 0.6 
+            opacity: videoStatus === 'playing' ? 0.6 : 0.3
           }}
-        ></div>
+        />
       </div>
 
       {/* Content Container */}
@@ -131,7 +183,7 @@ const HeroSection = () => {
               color: colors.background,
               border: `2px solid ${colors.borderLight}`
             }}
-            onClick={()=>{navigate("/virtual-museum")}}
+            onClick={() => navigate("/virtual-museum")}
           >
             Virtual World
           </motion.button>
@@ -144,7 +196,7 @@ const HeroSection = () => {
               color: colors.text,
               border: `2px solid ${colors.borderMedium}`
             }}
-            onClick={()=>{navigate("/gallery")}}
+            onClick={() => navigate("/gallery")}
           >
             Gallery
           </motion.button>
